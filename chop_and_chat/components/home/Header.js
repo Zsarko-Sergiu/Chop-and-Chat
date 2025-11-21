@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Modal, ScrollView, Touchable } from 'react-native';
 import { useState } from 'react';
 
 export default function Header(){
@@ -28,7 +28,88 @@ export default function Header(){
                 <View style = {styles.modalContainer}>
                     <View style = {styles.modalContent}>
                         <Text style = {styles.modalTitle}>Notifications</Text>
-                        <TouchableOpacity onPress={()=>setModalVisible(false)}>
+                        
+                        {/* Notifcations testing  */}
+                        <ScrollView style={styles.notificationList}>
+
+                            <TouchableOpacity>
+                                <View style={styles.notificationItem}>
+                                    <Text style={styles.notificationIcon}>👨‍🍳</Text>
+                                    <View style={styles.notificationText}>
+                                        <Text style={styles.notificationTitle}>Testing notificationTitle 1</Text>
+                                        <Text style={styles.notificationSubtitle}>Testing notificationSubtitle 1</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity>
+                                <View style={styles.notificationItem}>
+                                    <Text style={styles.notificationIcon}>👨‍🍳</Text>
+                                    <View style={styles.notificationText}>
+                                        <Text style={styles.notificationTitle}>Testing notificationTitle 2</Text>
+                                        <Text style={styles.notificationSubtitle}>Testing notificationSubtitle 2</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity>
+                                <View style={styles.notificationItem}>
+                                    <Text style={styles.notificationIcon}>👨‍🍳</Text>
+                                    <View style={styles.notificationText}>
+                                        <Text style={styles.notificationTitle}>Testing notificationTitle 3</Text>
+                                        <Text style={styles.notificationSubtitle}>Testing notificationSubtitle 3</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+
+
+                            <TouchableOpacity>
+                                <View style={styles.notificationItem}>
+                                    <Text style={styles.notificationIcon}>👨‍🍳</Text>
+                                    <View style={styles.notificationText}>
+                                        <Text style={styles.notificationTitle}>Testing notificationTitle 4</Text>
+                                        <Text style={styles.notificationSubtitle}>Testing notificationSubtitle 4</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                            
+
+                            <TouchableOpacity>
+                                <View style={styles.notificationItem}>
+                                    <Text style={styles.notificationIcon}>🔥</Text>
+                                    <View style={styles.notificationText}>
+                                        <Text style={styles.notificationTitle}>Testing notificationTitle 5</Text>
+                                        <Text style={styles.notificationSubtitle}>Testing notificationSubtitle 5</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+
+
+                            <TouchableOpacity>
+                                <View style={styles.notificationItem}>
+                                    <Text style={styles.notificationIcon}>🔥</Text>
+                                    <View style={styles.notificationText}>
+                                        <Text style={styles.notificationTitle}>Testing notificationTitle 5</Text>
+                                        <Text style={styles.notificationSubtitle}>Testing notificationSubtitle 5</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+
+
+                            <TouchableOpacity>
+                                <View style={styles.notificationItem}>
+                                    <Text style={styles.notificationIcon}>🔥</Text>
+                                    <View style={styles.notificationText}>
+                                        <Text style={styles.notificationTitle}>Testing notificationTitle 5</Text>
+                                        <Text style={styles.notificationSubtitle}>Testing notificationSubtitle 5</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+
+                        </ScrollView>
+                        {/* until here */}
+
+                        <TouchableOpacity onPress={()=>setModalVisible(false)} style={styles.closeButtonContainer}>
                             <Text style = {styles.modalCloseButton}>Close</Text>
                         </TouchableOpacity>
                     </View>
@@ -43,13 +124,18 @@ const styles = StyleSheet.create({
     container:{
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
         padding: 16,
+        backgroundColor: '#F8F5F0',
         borderBottomWidth: 1,
-        borderBottomColor: '#e0e0e0', 
+        borderBottomColor: '#E9E0C7', 
     },
     appName:{
         fontSize: 22,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: '#3F3A36',
+        justifyContent: 'center',
+
     },
 
     rightButtons:{
@@ -61,38 +147,81 @@ const styles = StyleSheet.create({
 
     button:{
         borderRadius: 8,
-        backgroundColor: '#cec7c7ff',
-        shadowColor: '#000',
-        shadowOffset: { width: 3, height: 2 },
+        backgroundColor: '#f1e5ceff',
+        shadowColor: '#1f0c0cff',
+        shadowOffset: { width: 5, height: 3 },
         shadowOpacity: 0.1,
         shadowRadius: 3,
         elevation: 3,
+        padding: 8,
     },
 
     buttonText:{
         fontSize: 20
     },
 
-
-    modalContainer: {
+     modalContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0,0,0,0.5)',
     },
     modalContent: {
-        backgroundColor: 'white',
+        backgroundColor: '#F8F5F0',
         padding: 20,
         borderRadius: 12,
-        width: '80%',
+        width: '90%',
+        maxHeight: '70%',
     },
     modalTitle: {
-        fontSize: 18,
+        fontSize: 22,
         fontWeight: 'bold',
-        marginBottom: 12,
+        marginBottom: 16,
+        color: '#3F3A36',
     },
-    closeButton: {
-        color: 'blue',
-        marginTop: 12,
+
+    // notification testing input styles
+
+    notificationList: {
+        marginBottom: 16,
+        maxHeight: 320 // so we only have aprox 4 notifications on the screen
+    },
+
+    notificationItem: {
+        flexDirection: 'row',
+        backgroundColor: '#f1e5ceff',
+        padding: 12,
+        borderRadius: 8,
+        marginBottom: 12,
+        borderWidth: 1,
+        borderColor: '#E9E0C7',
+    },
+    notificationIcon: {
+        fontSize: 24,
+        marginRight: 12,
+    },
+    notificationText: {
+        flex: 1,
+    },
+    notificationTitle: {
+        fontSize: 15,
+        fontWeight: '600',
+        color: '#3F3A36',
+        marginBottom: 4,
+    },
+    notificationSubtitle: {
+        fontSize: 13,
+        color: '#666',
+    },
+    closeButtonContainer: {
+        alignItems: 'center',
+        paddingTop: 8,
+        borderTopWidth: 1,
+        borderTopColor: '#E9E0C7',
+    },
+    modalCloseButton: {
+        color: '#A7845C',
+        fontSize: 16,
+        fontWeight: '600',
     },
 });

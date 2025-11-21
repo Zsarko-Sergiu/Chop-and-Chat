@@ -1,24 +1,22 @@
-import { StyleSheet, View, Platform, StatusBar } from 'react-native';
-import Header from "./components/home/Header";
-import MainActions from './components/home/MainActions';
-import FeaturedChef from "./components/home/FeaturedChef";
-import CommunityFeed from "./components/home/CommunityFeed"; 
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeScreen from "./screens/HomeScreen";
+import ProfileScreen from "./screens/ProfileScreen";
+
+
+const Stack = createNativeStackNavigator();
 
 export default function App() { 
   return (
-    <View style={styles.container}>
-      <Header />
-      <MainActions /> 
-      <FeaturedChef />
-      <CommunityFeed />
-    </View>
+    <NavigationContainer>
+      
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+        {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
+      </Stack.Navigator>
+
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingTop: Platform.OS === 'ios' ? 35 : StatusBar.currentHeight,
-  },
-});
+
