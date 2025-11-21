@@ -19,6 +19,8 @@ export default function MainActions(){
                     <Text style={styles.title}>Upload Your Dish</Text>
                     <Text style={styles.subtitle}>Ready to be judged?</Text>
                 </View>
+                    <Text style={styles.arrow}>→</Text>
+
             </TouchableOpacity>
         </View>
     );
