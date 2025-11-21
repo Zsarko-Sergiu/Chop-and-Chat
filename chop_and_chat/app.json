@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "chop_and_chat_new",
-    "slug": "chop_and_chat_new",
+    "name": "Chop&Chat",
+    "slug": "chop_and_chat",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
