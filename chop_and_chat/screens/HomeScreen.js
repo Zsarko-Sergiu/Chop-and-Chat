@@ -18,7 +18,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#467A9C',
     paddingTop: Platform.OS === 'ios' ? 35 : StatusBar.currentHeight,
   },
 });

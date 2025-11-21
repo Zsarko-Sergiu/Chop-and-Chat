@@ -3,6 +3,7 @@ import {Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 
 export default function MainActions(){
 
+    // TODO: modifica sa mearga apasat doar pe iconite
     return(
         <View style= {styles.container}>
             <TouchableOpacity style={styles.card}>
@@ -10,7 +11,7 @@ export default function MainActions(){
                     <Text style={styles.title}>Find a Recipe</Text>
                     <Text style={styles.subtitle}>Turn leftovers into something edible</Text>
                 </View>
-                <Text style={styles.arrow}>→</Text>
+                <Text style={styles.arrow}>🔍</Text>
             </TouchableOpacity>
 
 
@@ -19,7 +20,7 @@ export default function MainActions(){
                     <Text style={styles.title}>Upload Your Dish</Text>
                     <Text style={styles.subtitle}>Ready to be judged?</Text>
                 </View>
-                    <Text style={styles.arrow}>→</Text>
+                    <Text style={styles.arrow}>➕</Text>
 
             </TouchableOpacity>
         </View>
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
 
     card:{
         flexDirection: 'row',
-        backgroundColor: '#f8f8f8',
+        backgroundColor: '#F1E5CE',
         padding: 25,
         borderRadius: 12,
         alignItems: 'center',
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
         elevation: 3,
 
         borderWidth: 1,
-        borderColor: '#e0e0e0',
+        borderColor: '#2A2A2A',
     },
 
 
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
     title:{
         fontSize: 18,
         fontWeight: '600',
-        color: '#333',
+        color: '#1F1F1F',
         marginBottom: 6,
     },
 

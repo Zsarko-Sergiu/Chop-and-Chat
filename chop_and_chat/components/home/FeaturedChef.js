@@ -27,22 +27,22 @@ const styles = StyleSheet.create({
         paddingTop: 24,
         marginTop: 8,
         borderTopWidth: 1,
-        borderTopColor: '#e0e0e0',
+        borderTopColor: '#2A2A2A',
     },
     sectionTitle: {
         fontSize: 18,
         fontWeight: '600',
         marginBottom: 12,
-        color: '#333',
+        color: '#F8F5F0',
     },
     reviewCard: {
         flexDirection: 'row',
-        backgroundColor: '#f8f8f8',
+        backgroundColor: '#F1E5CE',
         padding: 16,
         borderRadius: 12,
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: '#e0e0e0',
+        borderColor: '#2A2A2A',
     },
     chefImagePlaceholder: {
         width: 70,
@@ -67,6 +67,6 @@ const styles = StyleSheet.create({
     reviewText: {
         fontSize: 16,
         fontWeight: '500',
-        color: '#333',
+        color: '#1F1F1F',
     },
 });

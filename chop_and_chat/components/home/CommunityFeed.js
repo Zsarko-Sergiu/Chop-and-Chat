@@ -22,11 +22,11 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '600',
         marginBottom: 12,
-        color: '#333',
+        color: '#F8F5F0',
     },
     placeholder: {
         fontSize: 14,
-        color: '#666',
+        color: '#F8F5F0',
         textAlign: 'center',
         padding: 20,
     },

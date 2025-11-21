@@ -126,14 +126,14 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: 16,
-        backgroundColor: '#F8F5F0',
+        backgroundColor: '#F1E5CE',
         borderBottomWidth: 1,
-        borderBottomColor: '#E9E0C7', 
+        borderColor: '#2A2A2A', 
     },
     appName:{
         fontSize: 22,
         fontWeight: 'bold',
-        color: '#3F3A36',
+        color: '#1F1F1F',
         justifyContent: 'center',
 
     },
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
 
     button:{
         borderRadius: 8,
-        backgroundColor: '#f1e5ceff',
+        backgroundColor: '#A5633D',
         shadowColor: '#1f0c0cff',
         shadowOffset: { width: 5, height: 3 },
         shadowOpacity: 0.1,
