@@ -1,12 +1,16 @@
 import { StyleSheet, View, Platform, StatusBar } from 'react-native';
-import Header from "./components/home/Header"
+import Header from "./components/home/Header";
 import MainActions from './components/home/MainActions';
+import FeaturedChef from "./components/home/FeaturedChef";
+import CommunityFeed from "./components/home/CommunityFeed"; 
 
-export default function App() {
+export default function App() { 
   return (
     <View style={styles.container}>
       <Header />
-      <MainActions />
+      <MainActions /> 
+      <FeaturedChef />
+      <CommunityFeed />
     </View>
   );
 }

@@ -72,6 +72,7 @@ We keep the app mostly free, but offer premium burns and personalized therapy vi
 Roast Level	Price	Description
 Lightly Toasted	$3	Sarcasm with a smile
 Full Charcoal	$10	Verbal flamethrower
+
 🧠 AI Features
 
 Food image analysis trained on MasterChef… and some food crime forums

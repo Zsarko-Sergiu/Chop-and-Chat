@@ -6,7 +6,6 @@ export default function MainActions(){
     return(
         <View style= {styles.container}>
             <TouchableOpacity style={styles.card}>
-                {/* <Text style={styles.icon}>🥘</Text> */}
                 <View style={styles.textContainer}>
                     <Text style={styles.title}>Find a Recipe</Text>
                     <Text style={styles.subtitle}>Turn leftovers into something edible</Text>
@@ -16,7 +15,6 @@ export default function MainActions(){
 
 
             <TouchableOpacity style={styles.card}>
-                {/* <Text style={styles.icon}>📸</Text> */}
                 <View style={styles.textContainer}>
                     <Text style={styles.title}>Upload Your Dish</Text>
                     <Text style={styles.subtitle}>Ready to be judged?</Text>
@@ -30,7 +28,8 @@ export default function MainActions(){
 const styles = StyleSheet.create({
     container:{
         padding: 20,
-        gap: 18
+        gap: 18,
+        marginTop: 8
     },
 
 
