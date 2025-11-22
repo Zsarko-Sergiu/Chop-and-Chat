@@ -1,7 +1,7 @@
 import { Text, View, StyleSheet, TouchableOpacity, Modal, ScrollView, Touchable } from 'react-native';
 import { useState } from 'react';
 
-export default function Header(){
+export default function Header( {navigation} ){
 
     const [modalVisibile, setModalVisible] = useState(false);
 
@@ -16,7 +16,7 @@ export default function Header(){
                     <Text style={styles.buttonText}>🔔</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={ ()=> navigation.navigate('Profile')}>
                     <Text style={styles.buttonText}>👤</Text>
                 </TouchableOpacity>
 

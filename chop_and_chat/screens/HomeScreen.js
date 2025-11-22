@@ -5,10 +5,10 @@ import CommunityFeed from "../components/home/CommunityFeed";
 import { StyleSheet, Platform, View } from "react-native";
 import { StatusBar } from 'expo-status-bar';
 
-export default function App() { 
+export default function HomeScreen({ navigation }) { 
   return (
     <View style={styles.container}>
-      <Header />
+      <Header navigation={navigation} />
       <MainActions /> 
       <FeaturedChef />
       <CommunityFeed />
