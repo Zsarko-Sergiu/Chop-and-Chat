@@ -3,6 +3,7 @@ import MainActions from '../components/home/MainActions';
 import FeaturedChef from "../components/home/FeaturedChef";
 import CommunityFeed from "../components/home/CommunityFeed"; 
 import { StyleSheet, Platform, View } from "react-native";
+import { StatusBar } from 'expo-status-bar';
 
 export default function App() { 
   return (
