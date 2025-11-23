@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, Button, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AuthContext, navigationRef } from '../App';
+import { AuthContext, navigationRef } from '../navigation';
 
 const BASE_URL = 'http://localhost:4000'; // change for emulator/device as noted above
 

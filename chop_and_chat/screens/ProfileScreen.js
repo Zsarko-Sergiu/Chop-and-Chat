@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet, Alert } from 'react-native';
-import { AuthContext, navigationRef } from '../App';
+import { AuthContext, navigationRef } from '../navigation';
 
 export default function ProfileScreen({ navigation }) {
   const auth = useContext(AuthContext);

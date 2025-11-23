@@ -3,11 +3,13 @@ const express = require('express');
 const pool = require('./db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const path = require('path');
 const cors = require('cors');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.get('/health', async (req, res) => {
   try {
@@ -34,6 +36,31 @@ function authenticateToken(req, res, next) {
     next();
   });
 }
+
+const postsRouter = require('./routes/posts');
+
+// mount posts router; note: posts router expects req.user to be set by authenticateToken for protected endpoints.
+// we'll use the auth middleware on individual routes inside index.js by wiring req.user before routes that need it.
+// To allow posts router to see req.user, mount the router and ensure authenticateToken is used where required.
+// Simple approach: set up middleware to map token->req.user for all requests (reuse authenticateToken but not fail if missing)
+app.use(async (req, res, next) => {
+  // try to decode token if present, but don't fail if missing
+  const auth = req.headers['authorization'];
+  if (auth) {
+    const token = auth.split(' ')[1];
+    if (token) {
+      try {
+        const user = jwt.verify(token, JWT_SECRET);
+        req.user = user;
+      } catch (e) {
+        // ignore invalid token
+      }
+    }
+  }
+  next();
+});
+
+app.use('/posts', postsRouter);
 
 // Register
 app.post('/register', async (req, res) => {
