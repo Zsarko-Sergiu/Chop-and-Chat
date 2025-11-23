@@ -1,9 +1,31 @@
-import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import React, { useContext } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet, Alert } from 'react-native';
+import { AuthContext, navigationRef } from '../App';
 
 export default function ProfileScreen({ navigation }) {
+  const auth = useContext(AuthContext);
+  const session = auth?.user;
+  const profile = session?.user || session; // handle session shapes { token, user } or plain user
+  const displayName = profile?.name || profile?.email || 'User';
+
+  const handleLogout = async () => {
+    try {
+      await auth.signOut();
+      // reset navigation to Auth (Login) screen
+      if (navigationRef && navigationRef.current && navigationRef.current.resetRoot) {
+        navigationRef.current.resetRoot({ index: 0, routes: [{ name: 'Login' }] });
+        return;
+      }
+      // fallback if navigationRef not available
+      navigation.reset({ index: 0, routes: [{ name: 'Login' }] });
+    } catch (err) {
+      console.warn('logout error', err);
+      Alert.alert('Error', 'Could not logout');
+    }
+  };
+
   return (
-    <ScrollView style = {styles.container}>
+    <ScrollView style={styles.container}>
 
       {/* Profile Header */}
       <View style={styles.header}>
@@ -11,23 +33,21 @@ export default function ProfileScreen({ navigation }) {
           source={require('../assets/favicon.png')} 
           style={styles.profileImage}
         />
-        <Text style={styles.username}>Antonio</Text> 
-        <Text style={styles.bio}>Food enthusiast </Text> 
+        <Text style={styles.username}>{displayName}</Text> 
+        <Text style={styles.bio}>Food enthusiast</Text> 
       </View>
 
-
-        {/* TODO: trebe facut  carduri pentru astea 2 de stats, ca si la main actions */}
       {/* Stats */}
       <View style={styles.statsContainer}>
-        <View style = {styles.statBox}>
+        <View style={styles.statBox}>
           <Text style={styles.statNumber}>20</Text>
           <Text style={styles.statLabel}>Recipes searched</Text>
         </View>
-        </View>
-        <View style = {styles.statBox}>
+        <View style={styles.statBox}>
           <Text style={styles.statNumber}>50</Text>
           <Text style={styles.statLabel}>Uploaded photos</Text>
         </View>
+      </View>
 
       {/* Menu Options */}
       <View style={styles.menuContainer}>
@@ -43,7 +63,7 @@ export default function ProfileScreen({ navigation }) {
           <Text>Settings</Text>
         </TouchableOpacity>
         
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity onPress={handleLogout}>
           <Text>Logout</Text>
         </TouchableOpacity>
       </View>
@@ -101,6 +121,8 @@ const styles = StyleSheet.create({
         marginTop: 5,
   },
 
-
-
-})
+  menuContainer: {
+    padding: 20,
+    gap: 12
+  }
+});
