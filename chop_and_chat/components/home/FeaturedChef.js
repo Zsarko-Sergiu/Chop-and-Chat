@@ -1,8 +1,6 @@
-import { Text, View, StyleSheet, Image } from 'react-native'
-
+import { Text, View, StyleSheet } from 'react-native';
 
 export default function FeaturedChef(){
-
     return (
         <View style={styles.container}>
             <Text style={styles.sectionTitle}>👨‍🍳 Featured Chef Review</Text>
