@@ -1,29 +1,49 @@
-import React from "react";
-import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import React, { useContext } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet, Alert } from 'react-native';
+import { AuthContext, navigationRef } from '../App';
 
 export default function ProfileScreen({ navigation }) {
+  const auth = useContext(AuthContext);
+  const session = auth?.user;
+  const profile = session?.user || session; // handle session shapes { token, user } or plain user
+  const displayName = profile?.name || profile?.email || 'User';
+
+  const handleLogout = async () => {
+    try {
+      await auth.signOut();
+      // reset navigation to Auth (Login) screen
+      if (navigationRef && navigationRef.current && navigationRef.current.resetRoot) {
+        navigationRef.current.resetRoot({ index: 0, routes: [{ name: 'Login' }] });
+        return;
+      }
+      // fallback if navigationRef not available
+      navigation.reset({ index: 0, routes: [{ name: 'Login' }] });
+    } catch (err) {
+      console.warn('logout error', err);
+      Alert.alert('Error', 'Could not logout');
+    }
+  };
+
   return (
     <ScrollView style={styles.container}>
-      
+
       {/* Profile Header */}
       <View style={styles.header}>
         <Image 
           source={require("../assets/favicon.png")}
           style={styles.profileImage}
         />
-        <Text style={styles.username}>Antonio</Text>
-        <Text style={styles.bio}>Food enthusiast</Text>
+        <Text style={styles.username}>{displayName}</Text> 
+        <Text style={styles.bio}>Food enthusiast</Text> 
       </View>
 
-      {/* Stats Cards */}
+      {/* Stats */}
       <View style={styles.statsContainer}>
-        <View style={styles.statCard}>
+        <View style={styles.statBox}>
           <Text style={styles.statNumber}>20</Text>
           <Text style={styles.statLabel}>Recipes searched</Text>
         </View>
-
-        <View style={styles.statCard}>
+        <View style={styles.statBox}>
           <Text style={styles.statNumber}>50</Text>
           <Text style={styles.statLabel}>Uploaded photos</Text>
         </View>
@@ -40,10 +60,13 @@ export default function ProfileScreen({ navigation }) {
           <Ionicons name="heart-outline" style={styles.icon} />
           <Text style={styles.menuText}>Favorite Recipes</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate("Settings")}>
-          <Ionicons name="settings-outline" style={styles.icon} />
-          <Text style={styles.menuText}>Settings</Text>
+        
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+          <Text>Settings</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity onPress={handleLogout}>
+          <Text>Logout</Text>
         </TouchableOpacity>
       </View>
 
@@ -106,51 +129,18 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
 
-  statNumber: {
-    fontSize: 22,
-    fontWeight: "bold",
-    color: "#333",
-  },
-
-  statLabel: {
-    fontSize: 12,
-    marginTop: 4,
-    color: "#555",
+    statNumber: {
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    statLabel: {
+        fontSize: 14,
+        color: '#666',
+        marginTop: 5,
   },
 
   menuContainer: {
-    marginTop: 30,
-  },
-
-  menuItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 15,
-    paddingHorizontal: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-  },
-
-  icon: {
-    marginRight: 10,
-    color: "#333",
-    fontSize: 20
-  },
-
-  menuText: {
-    fontSize: 16,
-    color: "#333",
-  },
-
-  logoutButton: {
-    marginTop: 30,
-    paddingVertical: 15,
-    alignItems: "center",
-  },
-
-  logoutText: {
-    color: "#d9534f",
-    fontSize: 18,
-    fontWeight: "600",
-  },
+    padding: 20,
+    gap: 12
+  }
 });
