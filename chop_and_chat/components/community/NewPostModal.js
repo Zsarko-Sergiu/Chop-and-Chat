@@ -1,9 +1,12 @@
 import React, { useState, useContext } from 'react';
-import { Modal, View, Text, Button, TextInput, Image, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { Modal, View, Text, Button, TextInput, Image, TouchableOpacity, StyleSheet, Alert, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { AuthContext, navigationRef } from '../../navigation';
 
-const BASE_URL = 'http://localhost:4000';
+const BASE_URL =
+  Platform.OS === "android" && !window.location
+    ? "http://10.0.2.2:4000"   // Android Emulator ONLY
+    : "http://localhost:4000"; // Web or iOS
 
 export default function NewPostModal({ visible, onClose, onCreated }) {
   const auth = useContext(AuthContext);
@@ -13,31 +16,51 @@ export default function NewPostModal({ visible, onClose, onCreated }) {
   const [uploading, setUploading] = useState(false);
 
   const pickImage = async () => {
-    const res = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (!res.granted) {
-      Alert.alert('Permission required', 'Media library permission is needed to pick images.');
-      return;
-    }
-    const pick = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ImagePicker.MediaTypeOptions.Images, quality: 0.8 });
-    if (!pick.cancelled) setImageUri(pick.uri);
-  };
+  const res = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  if (!res.granted) {
+    Alert.alert('Permission required', 'Media library permission is needed to pick images.');
+    return;
+  }
+
+  const pick = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    quality: 0.8,
+  });
+
+  console.log("RAW PICK:", pick);
+
+  if (pick.canceled || pick.cancelled) return;
+
+  // 🔥 FIX FOR WEB & MOBILE
+  const uri = Platform.OS === "web"
+    ? pick.assets?.[0]?.uri
+    : pick.uri;
+
+  console.log("RESOLVED URI:", uri);
+
+  if (!uri) {
+    Alert.alert("Error", "Could not load image.");
+    return;
+  }
+
+  setImageUri(uri);
+};
 
   const submit = async () => {
     if (!imageUri) { Alert.alert('Image required'); return; }
     try {
+      console.log("Submitting with:", imageUri);
       setUploading(true);
       const form = new FormData();
       const filename = imageUri.split('/').pop();
-      const match = /\.(\w+)$/.exec(filename);
-      const type = match ? `image/${match[1]}` : 'image/jpeg';
+      const type = "image/jpeg";
       form.append('image', { uri: imageUri, name: filename, type });
       if (caption) form.append('caption', caption);
 
       const res = await fetch(`${BASE_URL}/posts`, {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`
         },
         body: form,
       });

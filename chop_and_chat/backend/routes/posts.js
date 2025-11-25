@@ -3,6 +3,7 @@ const router = express.Router();
 const pool = require('../db');
 const multer = require('multer');
 const path = require('path');
+const postController = require('../controllers/postController');
 
 // storage to backend/uploads
 const storage = multer.diskStorage({
@@ -106,27 +107,6 @@ router.get('/:id/comments', async (req, res) => {
   }
 });
 
-// Like a post
-router.get('/', async (req, res) => {
-  try {
-    console.log('GET /posts — headers:', req.headers, 'user:', req.user?.id); // <-- debug
-    const { rows } = await pool.query(`
-      SELECT p.id, p.user_id, p.image_path, p.caption, p.created_at,
-        u.email AS author_email, u.name AS author_name,
-        (SELECT COUNT(*) FROM likes l WHERE l.post_id = p.id)::int AS like_count,
-        (SELECT COUNT(*) FROM comments c WHERE c.post_id = p.id)::int AS comment_count
-      FROM posts p
-      JOIN users u ON u.id = p.user_id
-      ORDER BY p.created_at DESC
-      LIMIT 50
-    `);
-    // ...existing code...
-  } catch (err) {
-    console.error('GET /posts error', err);
-    return res.status(500).json({ error: 'server error' });
-  }
-});
-
 // Unlike
 router.delete('/:id/like', async (req, res) => {
   try {
@@ -138,7 +118,7 @@ router.delete('/:id/like', async (req, res) => {
   } catch (err) {
     console.error('DELETE /posts/:id/like error', err);
     return res.status(500).json({ error: 'server error' });
-  }
+  } 
 });
 
 module.exports = router;

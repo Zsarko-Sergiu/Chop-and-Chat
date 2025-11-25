@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert } from 'react-native';
+import { View, Text, TextInput, Button, Alert, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const BASE_URL = 'http://localhost:4000'; // change for emulator/device as noted above
+const BASE_URL =
+  Platform.OS === "android" && !window.location
+    ? "http://10.0.2.2:4000"   // Android Emulator ONLY
+    : "http://localhost:4000"; // Web or iOS
 
 export default function RegisterScreen({ navigation }) {
   const [email, setEmail] = useState('');

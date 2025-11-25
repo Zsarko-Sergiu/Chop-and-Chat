@@ -1,10 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, FlatList, Button, StyleSheet, RefreshControl } from 'react-native';
+import { View, Text, FlatList, Button, StyleSheet, RefreshControl, Platform } from 'react-native';
 import PostCard from './PostCard';
 import NewPostModal from './NewPostModal';
 import { AuthContext, navigationRef } from '../../navigation';
 
-const BASE_URL = 'http://localhost:4000'; // adjust for emulator/device
+const BASE_URL =
+  Platform.OS === "android" && !window.location
+    ? "http://10.0.2.2:4000"   // Android Emulator ONLY
+    : "http://localhost:4000"; // Web or iOS
 
 export default function CommunityFeed() {
   const [posts, setPosts] = useState([]);

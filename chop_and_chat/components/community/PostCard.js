@@ -1,8 +1,11 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput, Modal, Button } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput, Modal, Button, Platform } from 'react-native';
 import { AuthContext, navigationRef } from '../../navigation';
 
-const BASE_URL = 'http://localhost:4000';
+const BASE_URL =
+  Platform.OS === "android" && !window.location
+    ? "http://10.0.2.2:4000"   // Android Emulator ONLY
+    : "http://localhost:4000"; // Web or iOS
 
 export default function PostCard({ post, onRefresh }) {
   const auth = useContext(AuthContext);
