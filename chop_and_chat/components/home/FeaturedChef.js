@@ -15,7 +15,7 @@ export default function FeaturedChef() {
                 <Text style={styles.sectionTitle}>Featured Chef Review</Text>
                 <Text style={styles.sectionSubtitle}>See what the pros think</Text>
             </View>
-
+            
             <ScrollView 
                 horizontal 
                 showsHorizontalScrollIndicator={false}
@@ -30,11 +30,16 @@ export default function FeaturedChef() {
                         ]}
                         onPress={() => console.log('Review pressed:', review.id)}
                     >
-                        <View style={styles.chefAvatar}>
-                            <Text style={styles.chefInitial}>GR</Text>
-                        </View>
-                        <View style={styles.reviewContent}>
+                        <View style={styles.cardHeader}>
+                            <View style={styles.chefAvatar}>
+                                <Text style={styles.chefInitial}>GR</Text>
+                            </View>
                             <Text style={styles.reviewTime}>{review.title}</Text>
+                        </View>
+                        
+                        <View style={styles.divider} />
+                        
+                        <View style={styles.reviewContent}>
                             <Text style={styles.reviewText}>{review.text}</Text>
                             <Text style={styles.reviewChef}>{review.chef}</Text>
                         </View>
@@ -72,8 +77,8 @@ const styles = StyleSheet.create({
     reviewCard: {
         width: 280,
         backgroundColor: '#FFFFFF',
-        padding: 16,
         borderRadius: 16,
+        overflow: 'hidden',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.08,
@@ -84,6 +89,13 @@ const styles = StyleSheet.create({
         opacity: 0.9,
         transform: [{ scale: 0.98 }],
     },
+    cardHeader: {
+        backgroundColor: '#F9FAFB',
+        padding: 16,
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 12,
+    },
     chefAvatar: {
         width: 56,
         height: 56,
@@ -91,15 +103,11 @@ const styles = StyleSheet.create({
         borderRadius: 28,
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 12,
     },
     chefInitial: {
         fontSize: 20,
         fontWeight: '700',
         color: '#FFFFFF',
-    },
-    reviewContent: {
-        gap: 6,
     },
     reviewTime: {
         fontSize: 12,
@@ -107,6 +115,17 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         textTransform: 'uppercase',
         letterSpacing: 0.5,
+        flex: 1,
+    },
+    divider: {
+        height: 1,
+        backgroundColor: '#E5E7EB',
+        marginHorizontal: 16,
+    },
+    reviewContent: {
+        padding: 16,
+        gap: 6,
+        backgroundColor: '#FFFFFF',
     },
     reviewText: {
         fontSize: 16,
