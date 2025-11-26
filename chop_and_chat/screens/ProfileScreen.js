@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     color: "#333",
     fontSize: 20
-  },
+  },  
 
   menuText: {
     fontSize: 16,

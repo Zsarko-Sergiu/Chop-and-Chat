@@ -1,22 +1,39 @@
-import { Text, View, StyleSheet, Image } from 'react-native'
+import { Text, View, StyleSheet, Image, ScrollView } from 'react-native'
 
 
 export default function FeaturedChef(){
 
+    const reviews = [
+        { id: 1, title: "This week:", text: "Chef Ramsay's Disappointment" },
+        { id: 2, title: "Last week:", text: "Gordon's Kitchen Nightmares" },
+        { id: 3, title: "2 weeks ago:", text: "The Perfect Wellington" },
+        { id: 4, title: "A month ago:", text: "Hell's Kitchen Fiasco" },
+        { id: 5, title: "2 months ago:", text: "MasterChef Mayhem" },
+        { id: 6, title: "3 months ago:", text: "Culinary Catastrophe" },
+    ];
+    
     return (
         <View style={styles.container}>
             <Text style={styles.sectionTitle}>👨‍🍳 Featured Chef Review</Text>
             
-            <View style={styles.reviewCard}>
-                <View style={styles.chefImagePlaceholder}>
-                    <Text style={styles.imagePlaceholderText}>👨‍🍳</Text>
-                </View>
-                
-                <View style={styles.reviewContent}>
-                    <Text style={styles.reviewTitle}>This week:</Text>
-                    <Text style={styles.reviewText}>Chef Ramsay's Disappointment</Text>
-                </View>
-            </View>
+            <ScrollView 
+                horizontal 
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.scrollContainer}
+            >
+                {reviews.map((review) => (
+                    <View key={review.id} style={styles.reviewCard}>
+                        <View style={styles.chefImagePlaceholder}>
+                            <Text style={styles.imagePlaceholderText}>👨‍🍳</Text>
+                        </View>
+                        
+                        <View style={styles.reviewContent}>
+                            <Text style={styles.reviewTitle}>{review.title}</Text>
+                            <Text style={styles.reviewText}>{review.text}</Text>
+                        </View>
+                    </View>
+                ))}
+            </ScrollView>
         </View>
     );
 }
