@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#3B82F6',
-    paddingTop: Platform.OS === 'ios' ? 35 : StatusBar.currentHeight,
+    paddingTop: Platform.OS === 'ios' ? 40 : StatusBar.currentHeight,
   },
   scrollView: {
     flex: 1,
