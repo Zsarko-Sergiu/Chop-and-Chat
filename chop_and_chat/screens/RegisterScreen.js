@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Pressable, Alert, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StatusBar } from 'expo-status-bar';
 
 const BASE_URL = 'http://localhost:4000'; // change for emulator/device as noted above
 
@@ -38,32 +39,136 @@ export default function RegisterScreen({ navigation }) {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', padding: 16 }}>
-      <Text style={{ fontSize: 24, marginBottom: 16 }}>Register</Text>
-      <TextInput
-        placeholder="Name (optional)"
-        value={name}
-        onChangeText={setName}
-        style={{ borderWidth: 1, marginBottom: 8, padding: 8 }}
-      />
-      <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        keyboardType="email-address"
-        style={{ borderWidth: 1, marginBottom: 8, padding: 8 }}
-      />
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        style={{ borderWidth: 1, marginBottom: 12, padding: 8 }}
-      />
-      <Button title="Create account" onPress={onRegister} />
-      <View style={{ height: 12 }} />
-      <Button title="Back to Login" onPress={() => navigation.navigate('Login')} />
+    <View style={styles.container}>
+      <StatusBar style="light" />
+      
+      <View style={styles.content}>
+        <View style={styles.header}>
+          <Text style={styles.title}>Register</Text>
+        </View>
+
+        <View style={styles.form}>
+          <TextInput
+            placeholder="Name (optional)"
+            placeholderTextColor="#9CA3AF"
+            value={name}
+            onChangeText={setName}
+            style={styles.input}
+          />
+
+          <TextInput
+            placeholder="Email"
+            placeholderTextColor="#9CA3AF"
+            value={email}
+            onChangeText={setEmail}
+            autoCapitalize="none"
+            keyboardType="email-address"
+            style={styles.input}
+          />
+
+          <TextInput
+            placeholder="Password"
+            placeholderTextColor="#9CA3AF"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            style={styles.input}
+          />
+
+          <Pressable 
+            style={({ pressed }) => [
+              styles.createButton,
+              pressed && styles.buttonPressed
+            ]}
+            onPress={onRegister}
+          >
+            <Text style={styles.createButtonText}>Create account</Text>
+          </Pressable>
+
+          <Pressable 
+            style={({ pressed }) => [
+              styles.backButton,
+              pressed && styles.buttonPressed
+            ]}
+            onPress={() => navigation.navigate('Login')}
+          >
+            <Text style={styles.backButtonText}>Back to Login</Text>
+          </Pressable>
+        </View>
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#3B82F6',
+    paddingTop: Platform.OS === 'ios' ? 60 : StatusBar.currentHeight + 20,
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+  },
+  header: {
+    marginBottom: 32,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: '700',
+    color: '#FFFFFF',
+    letterSpacing: -0.5,
+  },
+  form: {
+    gap: 16,
+  },
+  input: {
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    borderRadius: 16,
+    fontSize: 16,
+    color: '#111827',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 3,
+  },
+  createButton: {
+    backgroundColor: '#FFFFFF',
+    paddingVertical: 16,
+    borderRadius: 16,
+    alignItems: 'center',
+    marginTop: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 12,
+    elevation: 4,
+  },
+  createButtonText: {
+    color: '#3B82F6',
+    fontSize: 16,
+    fontWeight: '700',
+    letterSpacing: -0.3,
+  },
+  backButton: {
+    backgroundColor: 'transparent',
+    paddingVertical: 16,
+    borderRadius: 16,
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#FFFFFF',
+  },
+  backButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  buttonPressed: {
+    opacity: 0.8,
+    transform: [{ scale: 0.98 }],
+  },
+});
