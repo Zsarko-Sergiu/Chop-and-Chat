@@ -1,226 +1,242 @@
-import { Text, View, StyleSheet, TouchableOpacity, Modal, ScrollView, Touchable } from 'react-native';
+import { Text, View, StyleSheet, Pressable, Modal, ScrollView } from 'react-native';
 import { useState } from 'react';
 
-export default function Header( {navigation} ){
+export default function Header({ navigation }) {
+    const [modalVisible, setModalVisible] = useState(false);
 
-    const [modalVisibile, setModalVisible] = useState(false);
-
-
-    return(
+    return (
         <View style={styles.container}>
-            <Text style={styles.appName}>🍳 Cook&Chat</Text>
-
+            <Text style={styles.appName}>Cook&Chat</Text>
 
             <View style={styles.rightButtons}>
-                <TouchableOpacity style={styles.button} onPress={()=>setModalVisible(true)}>
+                <Pressable 
+                    style={({ pressed }) => [
+                        styles.button,
+                        pressed && styles.buttonPressed
+                    ]}
+                    onPress={() => setModalVisible(true)}
+                >
                     <Text style={styles.buttonText}>🔔</Text>
-                </TouchableOpacity>
+                </Pressable>
 
-                <TouchableOpacity style={styles.button} onPress={ ()=> navigation.navigate('Profile')}>
+                <Pressable 
+                    style={({ pressed }) => [
+                        styles.button,
+                        pressed && styles.buttonPressed
+                    ]}
+                    onPress={() => navigation.navigate('Profile')}
+                >
                     <Text style={styles.buttonText}>👤</Text>
-                </TouchableOpacity>
-
+                </Pressable>
             </View>
 
-            {/* sliding window after we press the notif icon */}
-
-            <Modal visible={modalVisibile} transparent={false} animationType='slide'>
-                <View style = {styles.modalContainer}>
-                    <View style = {styles.modalContent}>
-                        <Text style = {styles.modalTitle}>Notifications</Text>
+            {/* Notifications Modal */}
+            <Modal visible={modalVisible} transparent={true} animationType='slide'>
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalContainer}>
+                        <View style={styles.modalHeader}>
+                            <Text style={styles.modalTitle}>Notifications</Text>
+                            <Text style={styles.modalSubtitle}>Stay updated with your activity</Text>
+                        </View>
                         
-                        {/* Notifcations testing  */}
-                        <ScrollView style={styles.notificationList}>
-
-                            <TouchableOpacity>
-                                <View style={styles.notificationItem}>
-                                    <Text style={styles.notificationIcon}>👨‍🍳</Text>
-                                    <View style={styles.notificationText}>
-                                        <Text style={styles.notificationTitle}>Testing notificationTitle 1</Text>
-                                        <Text style={styles.notificationSubtitle}>Testing notificationSubtitle 1</Text>
+                        <ScrollView 
+                            style={styles.notificationList}
+                            showsVerticalScrollIndicator={false}
+                        >
+                            {[
+                                { id: 1, title: 'New Recipe Match', subtitle: 'Found 3 recipes for your ingredients', time: '2m ago', unread: true },
+                                { id: 2, title: 'Chef Review Posted', subtitle: 'Your dish got reviewed by Chef Gordon', time: '1h ago', unread: true },
+                                { id: 3, title: 'Popular Dish Alert', subtitle: 'Your pizza got 50 likes!', time: '3h ago', unread: false },
+                                { id: 4, title: 'Trending Recipe', subtitle: 'Check out this week\'s most popular dish', time: '5h ago', unread: false },
+                                { id: 5, title: 'Community Highlight', subtitle: 'You were featured in the feed', time: '1d ago', unread: false },
+                            ].map((notif) => (
+                                <Pressable
+                                    key={notif.id}
+                                    style={({ pressed }) => [
+                                        styles.notificationItem,
+                                        notif.unread && styles.notificationUnread,
+                                        pressed && styles.notificationPressed
+                                    ]}
+                                    onPress={() => console.log('Notification pressed:', notif.id)}
+                                >
+                                    <View style={styles.notificationContent}>
+                                        <View style={styles.notificationHeader}>
+                                            <Text style={styles.notificationTitle}>{notif.title}</Text>
+                                            <Text style={styles.notificationTime}>{notif.time}</Text>
+                                        </View>
+                                        <Text style={styles.notificationSubtitle}>{notif.subtitle}</Text>
                                     </View>
-                                </View>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity>
-                                <View style={styles.notificationItem}>
-                                    <Text style={styles.notificationIcon}>👨‍🍳</Text>
-                                    <View style={styles.notificationText}>
-                                        <Text style={styles.notificationTitle}>Testing notificationTitle 2</Text>
-                                        <Text style={styles.notificationSubtitle}>Testing notificationSubtitle 2</Text>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity>
-                                <View style={styles.notificationItem}>
-                                    <Text style={styles.notificationIcon}>👨‍🍳</Text>
-                                    <View style={styles.notificationText}>
-                                        <Text style={styles.notificationTitle}>Testing notificationTitle 3</Text>
-                                        <Text style={styles.notificationSubtitle}>Testing notificationSubtitle 3</Text>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-
-
-                            <TouchableOpacity>
-                                <View style={styles.notificationItem}>
-                                    <Text style={styles.notificationIcon}>👨‍🍳</Text>
-                                    <View style={styles.notificationText}>
-                                        <Text style={styles.notificationTitle}>Testing notificationTitle 4</Text>
-                                        <Text style={styles.notificationSubtitle}>Testing notificationSubtitle 4</Text>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                            
-
-                            <TouchableOpacity>
-                                <View style={styles.notificationItem}>
-                                    <Text style={styles.notificationIcon}>🔥</Text>
-                                    <View style={styles.notificationText}>
-                                        <Text style={styles.notificationTitle}>Testing notificationTitle 5</Text>
-                                        <Text style={styles.notificationSubtitle}>Testing notificationSubtitle 5</Text>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-
-
-                            <TouchableOpacity>
-                                <View style={styles.notificationItem}>
-                                    <Text style={styles.notificationIcon}>🔥</Text>
-                                    <View style={styles.notificationText}>
-                                        <Text style={styles.notificationTitle}>Testing notificationTitle 5</Text>
-                                        <Text style={styles.notificationSubtitle}>Testing notificationSubtitle 5</Text>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-
-
-                            <TouchableOpacity>
-                                <View style={styles.notificationItem}>
-                                    <Text style={styles.notificationIcon}>🔥</Text>
-                                    <View style={styles.notificationText}>
-                                        <Text style={styles.notificationTitle}>Testing notificationTitle 5</Text>
-                                        <Text style={styles.notificationSubtitle}>Testing notificationSubtitle 5</Text>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-
+                                    {notif.unread && <View style={styles.unreadDot} />}
+                                </Pressable>
+                            ))}
                         </ScrollView>
-                        {/* until here */}
 
-                        <TouchableOpacity onPress={()=>setModalVisible(false)} style={styles.closeButtonContainer}>
-                            <Text style = {styles.modalCloseButton}>Close</Text>
-                        </TouchableOpacity>
+                        <Pressable 
+                            onPress={() => setModalVisible(false)} 
+                            style={({ pressed }) => [
+                                styles.closeButton,
+                                pressed && styles.closeButtonPressed
+                            ]}
+                        >
+                            <Text style={styles.closeButtonText}>Close</Text>
+                        </Pressable>
                     </View>
                 </View>
             </Modal>
-
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 16,
-        backgroundColor: '#F1E5CE',
+        paddingHorizontal: 20,
+        paddingVertical: 16,
+        backgroundColor: '#FFFFFF',
         borderBottomWidth: 1,
-        borderColor: '#2A2A2A', 
+        borderBottomColor: '#E5E7EB',
     },
-    appName:{
-        fontSize: 22,
-        fontWeight: 'bold',
-        color: '#1F1F1F',
-        justifyContent: 'center',
-
+    appName: {
+        fontSize: 24,
+        fontWeight: '700',
+        color: '#111827',
+        letterSpacing: -0.5,
     },
-
-    rightButtons:{
+    rightButtons: {
         flexDirection: 'row',
-        gap: 20,
-        paddingRight: 6
+        gap: 12,
     },
-
-
-    button:{
-        borderRadius: 8,
-        backgroundColor: '#A5633D',
-        shadowColor: '#1f0c0cff',
-        shadowOffset: { width: 5, height: 3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-        elevation: 3,
-        padding: 8,
-    },
-
-    buttonText:{
-        fontSize: 20
-    },
-
-     modalContainer: {
-        flex: 1,
+    button: {
+        width: 44,
+        height: 44,
+        borderRadius: 12,
+        backgroundColor: '#3B82F6',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.5)',
+        shadowColor: '#3B82F6',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 8,
+        elevation: 4,
     },
-    modalContent: {
-        backgroundColor: '#F8F5F0',
-        padding: 20,
-        borderRadius: 12,
-        width: '90%',
-        maxHeight: '70%',
+    buttonPressed: {
+        opacity: 0.8,
+        transform: [{ scale: 0.96 }],
+    },
+    buttonText: {
+        fontSize: 20,
+    },
+
+    // Modal Styles
+    modalOverlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: 'flex-end',
+    },
+    modalContainer: {
+        backgroundColor: '#FFFFFF',
+        borderTopLeftRadius: 24,
+        borderTopRightRadius: 24,
+        maxHeight: '85%',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: -4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 12,
+        elevation: 8,
+    },
+    modalHeader: {
+        paddingHorizontal: 24,
+        paddingTop: 24,
+        paddingBottom: 16,
+        borderBottomWidth: 1,
+        borderBottomColor: '#F3F4F6',
     },
     modalTitle: {
-        fontSize: 22,
-        fontWeight: 'bold',
-        marginBottom: 16,
-        color: '#3F3A36',
-    },
-
-    // notification testing input styles
-
-    notificationList: {
-        marginBottom: 16,
-        maxHeight: 320 // so we only have aprox 4 notifications on the screen
-    },
-
-    notificationItem: {
-        flexDirection: 'row',
-        backgroundColor: '#f1e5ceff',
-        padding: 12,
-        borderRadius: 8,
-        marginBottom: 12,
-        borderWidth: 1,
-        borderColor: '#E9E0C7',
-    },
-    notificationIcon: {
-        fontSize: 24,
-        marginRight: 12,
-    },
-    notificationText: {
-        flex: 1,
-    },
-    notificationTitle: {
-        fontSize: 15,
-        fontWeight: '600',
-        color: '#3F3A36',
+        fontSize: 28,
+        fontWeight: '700',
+        color: '#111827',
         marginBottom: 4,
     },
-    notificationSubtitle: {
-        fontSize: 13,
-        color: '#666',
+    modalSubtitle: {
+        fontSize: 14,
+        color: '#6B7280',
+        fontWeight: '400',
     },
-    closeButtonContainer: {
+
+    // Notification List
+    notificationList: {
+        paddingHorizontal: 24,
+        paddingTop: 16,
+    },
+    notificationItem: {
+        flexDirection: 'row',
+        backgroundColor: '#F9FAFB',
+        padding: 16,
+        borderRadius: 16,
+        marginBottom: 12,
         alignItems: 'center',
-        paddingTop: 8,
-        borderTopWidth: 1,
-        borderTopColor: '#E9E0C7',
+        borderWidth: 1,
+        borderColor: '#F3F4F6',
     },
-    modalCloseButton: {
-        color: '#A7845C',
+    notificationUnread: {
+        backgroundColor: '#EFF6FF',
+        borderColor: '#DBEAFE',
+    },
+    notificationPressed: {
+        opacity: 0.7,
+        transform: [{ scale: 0.98 }],
+    },
+    notificationContent: {
+        flex: 1,
+    },
+    notificationHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 6,
+    },
+    notificationTitle: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#111827',
+        flex: 1,
+    },
+    notificationTime: {
+        fontSize: 12,
+        color: '#9CA3AF',
+        fontWeight: '500',
+        marginLeft: 8,
+    },
+    notificationSubtitle: {
+        fontSize: 14,
+        color: '#6B7280',
+        lineHeight: 20,
+    },
+    unreadDot: {
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        backgroundColor: '#3B82F6',
+        marginLeft: 12,
+    },
+
+    // Close Button
+    closeButton: {
+        margin: 24,
+        marginTop: 16,
+        paddingVertical: 16,
+        backgroundColor: '#F3F4F6',
+        borderRadius: 12,
+        alignItems: 'center',
+    },
+    closeButtonPressed: {
+        opacity: 0.7,
+        transform: [{ scale: 0.98 }],
+    },
+    closeButtonText: {
+        color: '#374151',
         fontSize: 16,
         fontWeight: '600',
     },

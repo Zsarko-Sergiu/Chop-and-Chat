@@ -1,42 +1,52 @@
-import { Text, View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
+import { Text, View, StyleSheet, ScrollView, Pressable } from 'react-native';
 
-export default function CommunityFeed(){
+export default function CommunityFeed() {
     const posts = [
-        { id: 1, title: "Homemade Pizza Margherita", description: "Just made my first pizza from scratch! The dough came out perfect.", author: "John Doe" },
-        { id: 2, title: "Grandma's Secret Pasta Recipe", description: "Finally convinced grandma to share her famous carbonara recipe.", author: "Jane Smith" },
-        { id: 3, title: "Vegan Chocolate Cake", description: "Who said vegan desserts can't be delicious? This cake is amazing!", author: "Mike Johnson" },
-        { id: 4, title: "Sunday Brunch Special", description: "Eggs benedict with hollandaise sauce - turned out better than expected.", author: "Sarah Lee" },
-        { id: 5, title: "Thai Curry Adventure", description: "First time making green curry. The spice level is just right!", author: "Alex Brown" },
+        { id: 1, title: "Homemade Pizza Margherita", description: "Just made my first pizza from scratch! The dough came out perfect.", author: "John Doe", likes: 42, comments: 8 },
+        { id: 2, title: "Grandma's Secret Pasta Recipe", description: "Finally convinced grandma to share her famous carbonara recipe.", author: "Jane Smith", likes: 127, comments: 23 },
+        { id: 3, title: "Vegan Chocolate Cake", description: "Who said vegan desserts can't be delicious? This cake is amazing!", author: "Mike Johnson", likes: 89, comments: 15 },
+        { id: 4, title: "Sunday Brunch Special", description: "Eggs benedict with hollandaise sauce - turned out better than expected.", author: "Sarah Lee", likes: 56, comments: 12 },
+        { id: 5, title: "Thai Curry Adventure", description: "First time making green curry. The spice level is just right!", author: "Alex Brown", likes: 73, comments: 19 },
     ];
 
     return (
         <View style={styles.container}>
-            <Text style={styles.sectionTitle}>🔥 Community Feed</Text>
-            
+            <View style={styles.header}>
+                <Text style={styles.sectionTitle}>Community Feed</Text>
+                <Text style={styles.sectionSubtitle}>See what others are cooking</Text>
+            </View>
+
             <ScrollView 
                 style={styles.scrollContainer}
-                showsVerticalScrollIndicator={true}
+                showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.scrollContent}
             >
                 {posts.map((post) => (
-                    <TouchableOpacity 
+                    <Pressable 
                         key={post.id} 
-                        style={styles.postCard}
+                        style={({ pressed }) => [
+                            styles.postCard,
+                            pressed && styles.postCardPressed
+                        ]}
                         onPress={() => console.log('Post pressed:', post.id)}
-                        activeOpacity={0.7}
                     >
                         <View style={styles.dishImagePlaceholder}>
-                            <Text style={styles.imagePlaceholderText}>🍽️</Text>
+                            <Text style={styles.imagePlaceholderText}>IMAGE</Text>
                         </View>
-                        
+
                         <View style={styles.postContent}>
                             <Text style={styles.postTitle}>{post.title}</Text>
                             <Text style={styles.postDescription}>{post.description}</Text>
-                            <Text style={styles.postAuthor}>by {post.author}</Text>
+                            
+                            <View style={styles.postMeta}>
+                                <Text style={styles.postAuthor}>by {post.author}</Text>
+                                <View style={styles.postStats}>
+                                    <Text style={styles.statText}>♥ {post.likes}</Text>
+                                    <Text style={styles.statText}>💬 {post.comments}</Text>
+                                </View>
+                            </View>
                         </View>
-                        
-                        <Text style={styles.tapToView}>Tap to view →</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 ))}
             </ScrollView>
         </View>
@@ -46,68 +56,95 @@ export default function CommunityFeed(){
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 24,
-        paddingTop: 20,
-        marginTop: 8,
-        borderTopWidth: 1,
-        borderTopColor: '#2A2A2A',
+        paddingTop: 24,
+    },
+    header: {
+        paddingHorizontal: 20,
+        marginBottom: 16,
     },
     sectionTitle: {
-        fontSize: 18,
-        fontWeight: '600',
-        marginBottom: 12,
-        color: '#F8F5F0',
+        fontSize: 22,
+        fontWeight: '700',
+        color: '#FFFFFF',
+        marginBottom: 4,
+        letterSpacing: -0.5,
+    },
+    sectionSubtitle: {
+        fontSize: 14,
+        color: '#BFDBFE',
+        fontWeight: '400',
     },
     scrollContainer: {
         flex: 1,
     },
     scrollContent: {
-        paddingBottom: 20,
+        paddingHorizontal: 20,
+        paddingBottom: 32,
     },
     postCard: {
-        backgroundColor: '#F1E5CE',
-        padding: 14,
-        borderRadius: 12,
-        marginBottom: 8,
-        borderWidth: 1,
-        borderColor: '#2A2A2A',
+        backgroundColor: '#FFFFFF',
+        borderRadius: 16,
+        marginBottom: 16,
+        overflow: 'hidden',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.08,
+        shadowRadius: 12,
+        elevation: 3,
+    },
+    postCardPressed: {
+        opacity: 0.95,
+        transform: [{ scale: 0.99 }],
     },
     dishImagePlaceholder: {
         width: '100%',
-        height: 120,
-        backgroundColor: '#e0e0e0',
-        borderRadius: 8,
+        height: 180,
+        backgroundColor: '#F3F4F6',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 12,
     },
     imagePlaceholderText: {
-        fontSize: 48,
+        fontSize: 14,
+        fontWeight: '600',
+        color: '#9CA3AF',
+        letterSpacing: 2,
     },
     postContent: {
-        gap: 6,
+        padding: 16,
+        gap: 8,
     },
     postTitle: {
         fontSize: 18,
-        fontWeight: 'bold',
-        color: '#1F1F1F',
+        fontWeight: '700',
+        color: '#111827',
+        letterSpacing: -0.3,
     },
     postDescription: {
         fontSize: 14,
-        color: '#555',
+        color: '#6B7280',
         lineHeight: 20,
     },
-    postAuthor: {
-        fontSize: 12,
-        color: '#888',
-        fontStyle: 'italic',
-        marginTop: 4,
-    },
-    tapToView: {
-        fontSize: 12,
-        color: '#467A9C',
-        fontWeight: '600',
+    postMeta: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         marginTop: 8,
-        textAlign: 'right',
+        paddingTop: 12,
+        borderTopWidth: 1,
+        borderTopColor: '#F3F4F6',
+    },
+    postAuthor: {
+        fontSize: 13,
+        color: '#9CA3AF',
+        fontWeight: '500',
+    },
+    postStats: {
+        flexDirection: 'row',
+        gap: 16,
+    },
+    statText: {
+        fontSize: 13,
+        color: '#6B7280',
+        fontWeight: '600',
     },
 });

@@ -2,16 +2,23 @@ import Header from "../components/home/Header";
 import MainActions from '../components/home/MainActions';
 import FeaturedChef from "../components/home/FeaturedChef";
 import CommunityFeed from "../components/home/CommunityFeed"; 
-import { StyleSheet, Platform, View } from "react-native";
+import { StyleSheet, Platform, View, ScrollView } from "react-native";
 import { StatusBar } from 'expo-status-bar';
 
 export default function HomeScreen({ navigation }) { 
   return (
     <View style={styles.container}>
+      <StatusBar style="dark" />
       <Header navigation={navigation} />
-      <MainActions /> 
-      <FeaturedChef />
-      <CommunityFeed />
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
+        <MainActions /> 
+        <FeaturedChef />
+        <CommunityFeed />
+      
+      </ScrollView> 
     </View>
   );
 }
@@ -19,7 +26,10 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#467A9C',
+    backgroundColor: '#3B82F6',
     paddingTop: Platform.OS === 'ios' ? 35 : StatusBar.currentHeight,
+  },
+  scrollView: {
+    flex: 1,
   },
 });
