@@ -1,79 +1,93 @@
-import {Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, View, StyleSheet, Pressable } from 'react-native';
 
-
-export default function MainActions(){
-
-    // TODO: modifica sa mearga apasat doar pe iconite
-    return(
-        <View style= {styles.container}>
-            <TouchableOpacity style={styles.card}>
+export default function MainActions() {
+    return (
+        <View style={styles.container}>
+            <Pressable 
+                style={({ pressed }) => [
+                    styles.card,
+                    pressed && styles.cardPressed
+                ]}
+                onPress={() => console.log('Find Recipe pressed')}
+            >
                 <View style={styles.textContainer}>
                     <Text style={styles.title}>Find a Recipe</Text>
                     <Text style={styles.subtitle}>Turn leftovers into something edible</Text>
                 </View>
-                <Text style={styles.arrow}>🔍</Text>
-            </TouchableOpacity>
+                <View style={styles.iconContainer}>
+                    <Text style={styles.icon}>→</Text>
+                </View>
+            </Pressable>
 
-
-            <TouchableOpacity style={styles.card}>
+            <Pressable 
+                style={({ pressed }) => [
+                    styles.card,
+                    pressed && styles.cardPressed
+                ]}
+                onPress={() => console.log('Upload Dish pressed')}
+            >
                 <View style={styles.textContainer}>
                     <Text style={styles.title}>Upload Your Dish</Text>
                     <Text style={styles.subtitle}>Ready to be judged?</Text>
                 </View>
-                    <Text style={styles.arrow}>➕</Text>
-
-            </TouchableOpacity>
+                <View style={styles.iconContainer}>
+                    <Text style={styles.icon}>+</Text>
+                </View>
+            </Pressable>
         </View>
     );
 }
 
-
 const styles = StyleSheet.create({
-    container:{
+    container: {
         padding: 20,
-        gap: 18,
-        marginTop: 8
+        gap: 16,
     },
-
-
-    card:{
+    card: {
         flexDirection: 'row',
-        backgroundColor: '#F1E5CE',
-        padding: 25,
-        borderRadius: 12,
+        backgroundColor: '#FFFFFF',
+        padding: 20,
+        borderRadius: 16,
         alignItems: 'center',
         justifyContent: 'space-between',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
+        shadowOpacity: 0.08,
+        shadowRadius: 12,
         elevation: 3,
-
-        borderWidth: 1,
-        borderColor: '#2A2A2A',
     },
-
-
-    textContainer:{
-        flex: 1
+    cardPressed: {
+        opacity: 0.9,
+        transform: [{ scale: 0.98 }],
     },
-
-    title:{
+    textContainer: {
+        flex: 1,
+        gap: 6,
+    },
+    title: {
         fontSize: 18,
-        fontWeight: '600',
-        color: '#1F1F1F',
-        marginBottom: 6,
+        fontWeight: '700',
+        color: '#111827',
+        letterSpacing: -0.3,
     },
-
-    subtitle:{
+    subtitle: {
         fontSize: 14,
-        color: '#666',
-        fontStyle: 'italic',
+        color: '#6B7280',
+        fontWeight: '400',
+        lineHeight: 20,
     },
-
-    arrow: {
-        fontSize: 24,
-        color: '#999',
-        marginLeft: 12,
-    }
+    iconContainer: {
+        width: 40,
+        height: 40,
+        borderRadius: 10,
+        backgroundColor: '#F3F4F6',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 16,
+    },
+    icon: {
+        fontSize: 20,
+        color: '#3B82F6',
+        fontWeight: '600',
+    },
 });
