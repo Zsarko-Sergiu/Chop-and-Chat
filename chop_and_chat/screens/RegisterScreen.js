@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Pressable, Alert, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const BASE_URL = 'http://localhost:4000'; // change for emulator/device as noted above
 
@@ -39,7 +40,12 @@ export default function RegisterScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <LinearGradient
+      colors={['#3B82F6', '#2563EB', '#1D4ED8']}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={styles.container}
+    >
       <StatusBar style="light" />
       
       <View style={styles.content}>
@@ -50,7 +56,7 @@ export default function RegisterScreen({ navigation }) {
         <View style={styles.form}>
           <TextInput
             placeholder="Name (optional)"
-            placeholderTextColor="#9CA3AF"
+            placeholderTextColor="#6B7280"
             value={name}
             onChangeText={setName}
             style={styles.input}
@@ -58,7 +64,7 @@ export default function RegisterScreen({ navigation }) {
 
           <TextInput
             placeholder="Email"
-            placeholderTextColor="#9CA3AF"
+            placeholderTextColor="#6B7280"
             value={email}
             onChangeText={setEmail}
             autoCapitalize="none"
@@ -68,7 +74,7 @@ export default function RegisterScreen({ navigation }) {
 
           <TextInput
             placeholder="Password"
-            placeholderTextColor="#9CA3AF"
+            placeholderTextColor="#6B7280"
             value={password}
             onChangeText={setPassword}
             secureTextEntry
@@ -88,7 +94,7 @@ export default function RegisterScreen({ navigation }) {
           <Pressable 
             style={({ pressed }) => [
               styles.backButton,
-              pressed && styles.buttonPressed
+              pressed && styles.textButtonPressed
             ]}
             onPress={() => navigation.navigate('Login')}
           >
@@ -96,14 +102,13 @@ export default function RegisterScreen({ navigation }) {
           </Pressable>
         </View>
       </View>
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#3B82F6',
     paddingTop: Platform.OS === 'ios' ? 60 : StatusBar.currentHeight + 20,
   },
   content: {
@@ -121,13 +126,13 @@ const styles = StyleSheet.create({
     letterSpacing: -0.5,
   },
   form: {
-    gap: 16,
+    gap: 20,
   },
   input: {
     backgroundColor: '#FFFFFF',
     paddingHorizontal: 20,
     paddingVertical: 16,
-    borderRadius: 16,
+    borderRadius: 20,
     fontSize: 16,
     color: '#111827',
     shadowColor: '#000',
@@ -139,7 +144,7 @@ const styles = StyleSheet.create({
   createButton: {
     backgroundColor: '#FFFFFF',
     paddingVertical: 16,
-    borderRadius: 16,
+    borderRadius: 20,
     alignItems: 'center',
     marginTop: 8,
     shadowColor: '#000',
@@ -157,10 +162,7 @@ const styles = StyleSheet.create({
   backButton: {
     backgroundColor: 'transparent',
     paddingVertical: 16,
-    borderRadius: 16,
     alignItems: 'center',
-    borderWidth: 2,
-    borderColor: '#FFFFFF',
   },
   backButtonText: {
     color: '#FFFFFF',
@@ -170,5 +172,8 @@ const styles = StyleSheet.create({
   buttonPressed: {
     opacity: 0.8,
     transform: [{ scale: 0.98 }],
+  },
+  textButtonPressed: {
+    opacity: 0.7,
   },
 });
